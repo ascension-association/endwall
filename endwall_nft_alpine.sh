@@ -371,10 +371,10 @@ client_out() {
     ports=$2
 
     #   add rule fam  table  chain statement
-    nft add rule inet filter output oifname "$int_if" ip protocol "$proto" ip saddr "$int_ip" "$proto" sport { "$ports" } ct state { new, established } counter accept # jump PASS
-    nft add rule inet filter input iifname "$int_if" ip protocol "$proto" ip daddr "$int_ip" "$proto" dport { "$ports" } ct state { established } counter accept
-    nft add rule inet filter output oifname "$int_if" ip protocol "$proto" ip saddr "$int_ip" "$proto" dport { "$ports" } ct state { new, established } counter accept # jump PASS
-    nft add rule inet filter input iifname "$int_if" ip protocol "$proto" ip daddr "$int_ip" "$proto" sport { "$ports" } ct state { established } counter accept
+    test ! -z "$int_if" && nft add rule inet filter output oifname "$int_if" ip protocol "$proto" ip saddr "$int_ip" "$proto" sport { "$ports" } ct state { new, established } counter accept # jump PASS
+    test ! -z "$int_if" && nft add rule inet filter input iifname "$int_if" ip protocol "$proto" ip daddr "$int_ip" "$proto" dport { "$ports" } ct state { established } counter accept
+    test ! -z "$int_if" && nft add rule inet filter output oifname "$int_if" ip protocol "$proto" ip saddr "$int_ip" "$proto" dport { "$ports" } ct state { new, established } counter accept # jump PASS
+    test ! -z "$int_if" && nft add rule inet filter input iifname "$int_if" ip protocol "$proto" ip daddr "$int_ip" "$proto" sport { "$ports" } ct state { established } counter accept
 }
 
 ###  allow related connections more permisive
@@ -382,10 +382,10 @@ client_out_rel() {
     proto=$1
     ports=$2
     #   add rule fam  table  chain statement
-    nft add rule inet filter output oifname "$int_if" ip protocol "$proto" ip saddr "$int_ip" "$proto" sport { "$ports" } ct state { new, established, related } counter accept # jump PASS
-    nft add rule inet filter input iifname "$int_if" ip protocol "$proto" ip daddr "$int_ip" "$proto" dport { "$ports" } ct state { established, related } counter accept
-    nft add rule inet filter output oifname "$int_if" ip protocol "$proto" ip saddr "$int_ip" "$proto" dport { "$ports" } ct state { new, established, related } counter accept # jump PASS
-    nft add rule inet filter input iifname "$int_if" ip protocol "$proto" ip daddr "$int_ip" "$proto" sport { "$ports" } ct state { established, related } counter accept
+    test ! -z "$int_if" && nft add rule inet filter output oifname "$int_if" ip protocol "$proto" ip saddr "$int_ip" "$proto" sport { "$ports" } ct state { new, established, related } counter accept # jump PASS
+    test ! -z "$int_if" && nft add rule inet filter input iifname "$int_if" ip protocol "$proto" ip daddr "$int_ip" "$proto" dport { "$ports" } ct state { established, related } counter accept
+    test ! -z "$int_if" && nft add rule inet filter output oifname "$int_if" ip protocol "$proto" ip saddr "$int_ip" "$proto" dport { "$ports" } ct state { new, established, related } counter accept # jump PASS
+    test ! -z "$int_if" && nft add rule inet filter input iifname "$int_if" ip protocol "$proto" ip daddr "$int_ip" "$proto" sport { "$ports" } ct state { established, related } counter accept
 
 }
 ### only allow new and established connections, to or from specified ports
@@ -394,10 +394,10 @@ client6_out() {
     ports=$2
 
     #   add rule fam  table  chain statement
-    nft add rule inet filter output oifname "$int_if" ip6 saddr "$int_ipv6" "$proto" sport { "$ports" } ct state { new, established } counter accept # jump PASS
-    nft add rule inet filter input iifname "$int_if" ip6 daddr "$int_ipv6" "$proto" dport { "$ports" } ct state { established } counter accept
-    nft add rule inet filter output oifname "$int_if" ip6 saddr "$int_ipv6" "$proto" dport { "$ports" } ct state { new, established } counter accept # jump PASS
-    nft add rule inet filter input iifname "$int_if" ip6 daddr "$int_ipv6" "$proto" sport { "$ports" } ct state { established } counter accept
+    test ! -z "$int_if" && nft add rule inet filter output oifname "$int_if" ip6 saddr "$int_ipv6" "$proto" sport { "$ports" } ct state { new, established } counter accept # jump PASS
+    test ! -z "$int_if" && nft add rule inet filter input iifname "$int_if" ip6 daddr "$int_ipv6" "$proto" dport { "$ports" } ct state { established } counter accept
+    test ! -z "$int_if" && nft add rule inet filter output oifname "$int_if" ip6 saddr "$int_ipv6" "$proto" dport { "$ports" } ct state { new, established } counter accept # jump PASS
+    test ! -z "$int_if" && nft add rule inet filter input iifname "$int_if" ip6 daddr "$int_ipv6" "$proto" sport { "$ports" } ct state { established } counter accept
 
 }
 
@@ -406,10 +406,10 @@ client6_out_rel() {
     proto=$1
     ports=$2
     #   add rule fam  table  chain statement
-    nft add rule inet filter output oifname "$int_if" protocol "$proto" ip6 saddr "$int_ipv6" "$proto" sport { "$ports" } ct state { new, established, related } counter accept # jump PASS
-    nft add rule inet filter input iifname "$int_if" protocol "$proto" ip6 daddr "$int_ipv6" "$proto" dport { "$ports" } ct state { established, related } counter accept
-    nft add rule inet filter output oifname "$int_if" protocol "$proto" ip6 saddr "$int_ipv6" "$proto" dport { "$ports" } ct state { new, established, related } counter accept # jump PASS
-    nft add rule inet filter input iifname "$int_if" protocol "$proto" ip6 daddr "$int_ipv6" "$proto" sport { "$ports" } ct state { established, related } counter accept
+    test ! -z "$int_if" && nft add rule inet filter output oifname "$int_if" protocol "$proto" ip6 saddr "$int_ipv6" "$proto" sport { "$ports" } ct state { new, established, related } counter accept # jump PASS
+    test ! -z "$int_if" && nft add rule inet filter input iifname "$int_if" protocol "$proto" ip6 daddr "$int_ipv6" "$proto" dport { "$ports" } ct state { established, related } counter accept
+    test ! -z "$int_if" && nft add rule inet filter output oifname "$int_if" protocol "$proto" ip6 saddr "$int_ipv6" "$proto" dport { "$ports" } ct state { new, established, related } counter accept # jump PASS
+    test ! -z "$int_if" && nft add rule inet filter input iifname "$int_if" protocol "$proto" ip6 daddr "$int_ipv6" "$proto" sport { "$ports" } ct state { established, related } counter accept
 
 }
 
@@ -422,10 +422,10 @@ client_out_internal() {
     client_mac=$4
 
     #   add rule fam  table  chain statement
-    nft add rule inet filter output oifname "$int_if" ip protocol "$proto" ip saddr "$int_ip" "$proto" sport { "$ports" } ip daddr "$client_ip" counter accept # jump PASS
-    nft add rule inet filter input iifname "$int_if" ip protocol "$proto" ip daddr "$int_ip" "$proto" dport { "$ports" } ether saddr "$client_mac" ip saddr "$client_ip" ct state { established, related } counter accept
-    nft add rule inet filter output oifname "$int_if" ip protocol "$proto" ip saddr "$int_ip" "$proto" dport { "$ports" } ip daddr "$client_ip" counter accept # jump PASS
-    nft add rule inet filter input iifname "$int_if" ip protocol "$proto" ip daddr "$int_ip" "$proto" sport { "$ports" } ether saddr "$client_mac" ip saddr "$client_ip" ct state { established, related } counter accept
+    test ! -z "$int_if" && nft add rule inet filter output oifname "$int_if" ip protocol "$proto" ip saddr "$int_ip" "$proto" sport { "$ports" } ip daddr "$client_ip" counter accept # jump PASS
+    test ! -z "$int_if" && nft add rule inet filter input iifname "$int_if" ip protocol "$proto" ip daddr "$int_ip" "$proto" dport { "$ports" } ether saddr "$client_mac" ip saddr "$client_ip" ct state { established, related } counter accept
+    test ! -z "$int_if" && nft add rule inet filter output oifname "$int_if" ip protocol "$proto" ip saddr "$int_ip" "$proto" dport { "$ports" } ip daddr "$client_ip" counter accept # jump PASS
+    test ! -z "$int_if" && nft add rule inet filter input iifname "$int_if" ip protocol "$proto" ip daddr "$int_ip" "$proto" sport { "$ports" } ether saddr "$client_mac" ip saddr "$client_ip" ct state { established, related } counter accept
 }
 
 client_out_wifi() {
@@ -434,10 +434,10 @@ client_out_wifi() {
     int_if="wlan0"
 
     #   add rule fam  table  chain statement
-    nft add rule inet filter output oifname "$int_if" ip protocol "$proto" "$proto" sport { "$ports" } ct state { new, established } counter accept # jump PASS
-    nft add rule inet filter input iifname "$int_if" ip protocol "$proto" "$proto" dport { "$ports" } ct state { established } counter accept
-    nft add rule inet filter output oifname "$int_if" ip protocol "$proto" "$proto" dport { "$ports" } ct state { new, established } counter accept # jump PASS
-    nft add rule inet filter input iifname "$int_if" ip protocol "$proto" "$proto" sport { "$ports" } ct state { established } counter accept
+    test ! -z "$int_if" && nft add rule inet filter output oifname "$int_if" ip protocol "$proto" "$proto" sport { "$ports" } ct state { new, established } counter accept # jump PASS
+    test ! -z "$int_if" && nft add rule inet filter input iifname "$int_if" ip protocol "$proto" "$proto" dport { "$ports" } ct state { established } counter accept
+    test ! -z "$int_if" && nft add rule inet filter output oifname "$int_if" ip protocol "$proto" "$proto" dport { "$ports" } ct state { new, established } counter accept # jump PASS
+    test ! -z "$int_if" && nft add rule inet filter input iifname "$int_if" ip protocol "$proto" "$proto" sport { "$ports" } ct state { established } counter accept
 
 }
 
@@ -447,10 +447,10 @@ client6_out_wifi() {
     int_if="wlan0"
 
     #   add rule fam  table  chain statement
-    nft add rule inet filter output oifname "$int_if" ip6 saddr "$int_ipv6" "$proto" sport { "$ports" } ct state { new, established } counter accept # jump PASS
-    nft add rule inet filter input iifname "$int_if" ip6 daddr "$int_ipv6" "$proto" dport { "$ports" } ct state { established } counter accept
-    nft add rule inet filter output oifname "$int_if" ip6 saddr "$int_ipv6" "$proto" dport { "$ports" } ct state { new, established } counter accept # jump PASS
-    nft add rule inet filter input iifname "$int_if" ip6 daddr "$int_ipv6" "$proto" sport { "$ports" } ct state { established } counter accept
+    test ! -z "$int_if" && nft add rule inet filter output oifname "$int_if" ip6 saddr "$int_ipv6" "$proto" sport { "$ports" } ct state { new, established } counter accept # jump PASS
+    test ! -z "$int_if" && nft add rule inet filter input iifname "$int_if" ip6 daddr "$int_ipv6" "$proto" dport { "$ports" } ct state { established } counter accept
+    test ! -z "$int_if" && nft add rule inet filter output oifname "$int_if" ip6 saddr "$int_ipv6" "$proto" dport { "$ports" } ct state { new, established } counter accept # jump PASS
+    test ! -z "$int_if" && nft add rule inet filter input iifname "$int_if" ip6 daddr "$int_ipv6" "$proto" sport { "$ports" } ct state { established } counter accept
 
 }
 
@@ -460,10 +460,10 @@ client_out_rel_wifi() {
     int_if="wlan0"
 
     #   add rule fam  table  chain statement
-    nft add rule inet filter output oifname "$int_if" ip protocol "$proto" "$proto" sport { "$ports" } ct state { new, established, related } counter accept # jump PASS
-    nft add rule inet filter input iifname "$int_if" ip protocol "$proto" "$proto" dport { "$ports" } ct state { established, related } counter accept
-    nft add rule inet filter output oifname "$int_if" ip protocol "$proto" "$proto" dport { "$ports" } ct state { new, established, related } counter accept # jump PASS
-    nft add rule inet filter input iifname "$int_if" ip protocol "$proto" "$proto" sport { "$ports" } ct state { established, related } counter accept
+    test ! -z "$int_if" && nft add rule inet filter output oifname "$int_if" ip protocol "$proto" "$proto" sport { "$ports" } ct state { new, established, related } counter accept # jump PASS
+    test ! -z "$int_if" && nft add rule inet filter input iifname "$int_if" ip protocol "$proto" "$proto" dport { "$ports" } ct state { established, related } counter accept
+    test ! -z "$int_if" && nft add rule inet filter output oifname "$int_if" ip protocol "$proto" "$proto" dport { "$ports" } ct state { new, established, related } counter accept # jump PASS
+    test ! -z "$int_if" && nft add rule inet filter input iifname "$int_if" ip protocol "$proto" "$proto" sport { "$ports" } ct state { established, related } counter accept
 
 }
 
@@ -473,10 +473,10 @@ client6_out_rel_wifi() {
     int_if="wlan0"
 
     #   add rule fam  table  chain statement
-    nft add rule inet filter output oifname "$int_if" ip6 saddr "$int_ipv6" "$proto" sport { "$ports" } ct state { new, established, related } counter accept # jump PASS
-    nft add rule inet filter input iifname "$int_if" ip6 daddr "$int_ipv6" "$proto" dport { "$ports" } ct state { established, related } counter accept
-    nft add rule inet filter output oifname "$int_if" ip6 saddr "$int_ipv6" "$proto" dport { "$ports" } ct state { new, established, related } counter accept # jump PASS
-    nft add rule inet filter input iifname "$int_if" ip6 daddr "$int_ipv6" "$proto" sport { "$ports" } ct state { established, related } counter accept
+    test ! -z "$int_if" && nft add rule inet filter output oifname "$int_if" ip6 saddr "$int_ipv6" "$proto" sport { "$ports" } ct state { new, established, related } counter accept # jump PASS
+    test ! -z "$int_if" && nft add rule inet filter input iifname "$int_if" ip6 daddr "$int_ipv6" "$proto" dport { "$ports" } ct state { established, related } counter accept
+    test ! -z "$int_if" && nft add rule inet filter output oifname "$int_if" ip6 saddr "$int_ipv6" "$proto" dport { "$ports" } ct state { new, established, related } counter accept # jump PASS
+    test ! -z "$int_if" && nft add rule inet filter input iifname "$int_if" ip6 daddr "$int_ipv6" "$proto" sport { "$ports" } ct state { established, related } counter accept
 
 }
 
@@ -488,10 +488,10 @@ client_out_internal() {
     client_mac=$4
 
     #   add rule fam  table  chain statement
-    nft add rule inet filter output oifname "$int_if" ip protocol "$proto" ip saddr "$int_ip" ip daddr "$client_ip" "$proto" sport { "$ports" } ct state { new, established } counter accept # jump PASS
-    nft add rule inet filter input iifname "$int_if" ip protocol "$proto" ip daddr "$int_ip" ip saddr "$client_ip" "$proto" dport { "$ports" } ether saddr "$client_mac" ct state { established } counter accept
-    nft add rule inet filter output oifname "$int_if" ip protocol "$proto" ip saddr "$int_ip" ip daddr "$client_ip" "$proto" dport { "$ports" } ct state { new, established } counter accept # jump PASS
-    nft add rule inet filter input iifname "$int_if" ip protocol "$proto" ip daddr "$int_ip" ip saddr "$client_ip" "$proto" sport { "$ports" } ether saddr "$client_mac" ct state { established } counter accept
+    test ! -z "$int_if" && nft add rule inet filter output oifname "$int_if" ip protocol "$proto" ip saddr "$int_ip" ip daddr "$client_ip" "$proto" sport { "$ports" } ct state { new, established } counter accept # jump PASS
+    test ! -z "$int_if" && nft add rule inet filter input iifname "$int_if" ip protocol "$proto" ip daddr "$int_ip" ip saddr "$client_ip" "$proto" dport { "$ports" } ether saddr "$client_mac" ct state { established } counter accept
+    test ! -z "$int_if" && nft add rule inet filter output oifname "$int_if" ip protocol "$proto" ip saddr "$int_ip" ip daddr "$client_ip" "$proto" dport { "$ports" } ct state { new, established } counter accept # jump PASS
+    test ! -z "$int_if" && nft add rule inet filter input iifname "$int_if" ip protocol "$proto" ip daddr "$int_ip" ip saddr "$client_ip" "$proto" sport { "$ports" } ether saddr "$client_mac" ct state { established } counter accept
 }
 
 ############################ ICMP ###################################
@@ -499,9 +499,9 @@ icmp_out() {
     interface=$1
 
     ### ICMP Outbound
-    nft add rule inet filter output oifname "$interface" ip protocol icmp icmp type { echo-reply, echo-request, destination-unreachable, router-solicitation, router-advertisement, time-exceeded, parameter-problem } counter accept
+    test ! -z "$interface" && nft add rule inet filter output oifname "$interface" ip protocol icmp icmp type { echo-reply, echo-request, destination-unreachable, router-solicitation, router-advertisement, time-exceeded, parameter-problem } counter accept
     ### ICMP Inbound
-    nft add rule inet filter input iifname "$interface" ip protocol icmp icmp type { echo-reply, echo-request, destination-unreachable, router-solicitation, router-advertisement, time-exceeded, parameter-problem } ct state {established, related } counter accept
+    test ! -z "$interface" && nft add rule inet filter input iifname "$interface" ip protocol icmp icmp type { echo-reply, echo-request, destination-unreachable, router-solicitation, router-advertisement, time-exceeded, parameter-problem } ct state {established, related } counter accept
 
 }
 
@@ -510,9 +510,9 @@ icmp6_out() {
     interface=$1
 
     ### ICMP Outbound
-    nft add rule inet filter output oifname "$interface" icmpv6 type { echo-reply, echo-request, destination-unreachable, nd-router-solicit, nd-router-advert, nd-neighbor-advert, time-exceeded, parameter-problem } counter accept
+    test ! -z "$interface" && nft add rule inet filter output oifname "$interface" icmpv6 type { echo-reply, echo-request, destination-unreachable, nd-router-solicit, nd-router-advert, nd-neighbor-advert, time-exceeded, parameter-problem } counter accept
     ### ICMP Inbound
-    nft add rule inet filter input iifname "$interface" icmpv6 type { echo-reply, echo-request, destination-unreachable, nd-router-solicit, nd-router-advert, nd-neighbor-advert ,time-exceeded, parameter-problem } ct state {established, related } counter accept
+    test ! -z "$interface" && nft add rule inet filter input iifname "$interface" icmpv6 type { echo-reply, echo-request, destination-unreachable, nd-router-solicit, nd-router-advert, nd-neighbor-advert ,time-exceeded, parameter-problem } ct state {established, related } counter accept
 
 }
 
@@ -523,8 +523,8 @@ server_in() {
     proto=$1
     ports=$2
 
-    nft add rule inet filter input iifname "$int_if" ip protocol "$proto" ip daddr "$int_ip" "$proto" dport { "$ports" } counter log accept
-    nft add rule inet filter output oifname "$int_if" ip protocol "$proto" ip saddr "$int_ip" "$proto" sport { "$ports" } ct state { established, related } counter log accept
+    test ! -z "$int_if" && nft add rule inet filter input iifname "$int_if" ip protocol "$proto" ip daddr "$int_ip" "$proto" dport { "$ports" } counter log accept
+    test ! -z "$int_if" && nft add rule inet filter output oifname "$int_if" ip protocol "$proto" ip saddr "$int_ip" "$proto" sport { "$ports" } ct state { established, related } counter log accept
 
 }
 
@@ -533,10 +533,10 @@ server_in_x() {
     proto=$1
     ports=$2
 
-    nft add rule inet filter input iifname "$int_if" ip protocol "$proto" ip daddr "$int_ip" "$proto" dport { "$ports" } counter log accept
-    nft add rule inet filter output oifname "$int_if" ip protocol "$proto" ip saddr "$int_ip" "$proto" sport { "$ports" } ct state { established, related } counter log accept
-    nft add rule inet filter input iifname "$int_if" ip protocol "$proto" ip daddr "$int_ip" "$proto" sport { "$ports" } counter log accept
-    nft add rule inet filter output oifname "$int_if" ip protocol "$proto" ip saddr "$int_ip" "$proto" dport { "$ports" } ct state { established, related } counter log accept
+    test ! -z "$int_if" && nft add rule inet filter input iifname "$int_if" ip protocol "$proto" ip daddr "$int_ip" "$proto" dport { "$ports" } counter log accept
+    test ! -z "$int_if" && nft add rule inet filter output oifname "$int_if" ip protocol "$proto" ip saddr "$int_ip" "$proto" sport { "$ports" } ct state { established, related } counter log accept
+    test ! -z "$int_if" && nft add rule inet filter input iifname "$int_if" ip protocol "$proto" ip daddr "$int_ip" "$proto" sport { "$ports" } counter log accept
+    test ! -z "$int_if" && nft add rule inet filter output oifname "$int_if" ip protocol "$proto" ip saddr "$int_ip" "$proto" dport { "$ports" } ct state { established, related } counter log accept
 
 }
 
@@ -550,10 +550,10 @@ server_in_internal() {
     client_mac=$4
 
     #   add rule fam  table  chain statement
-    nft add rule inet filter input iifname "$int_if" ip protocol "$proto" ip daddr "$int_ip" "$proto" dport { "$ports" } ether saddr "$client_mac" ip saddr "$client_ip" ct state { new, established } counter accept
-    nft add rule inet filter output oifname "$int_if" ip protocol "$proto" ip saddr "$int_ip" "$proto" sport { "$ports" } ip daddr "$client_ip" ct state { established } counter accept # jump PASS
-    nft add rule inet filter input iifname "$int_if" ip protocol "$proto" ip daddr "$int_ip" "$proto" sport { "$ports" } ether saddr "$client_mac" ip saddr "$client_ip" ct state { new, established } counter accept
-    nft add rule inet filter output oifname "$int_if" ip protocol "$proto" ip saddr "$int_ip" "$proto" dport { "$ports" } ip daddr "$client_ip" ct state { established } counter accept # jump PASS
+    test ! -z "$int_if" && nft add rule inet filter input iifname "$int_if" ip protocol "$proto" ip daddr "$int_ip" "$proto" dport { "$ports" } ether saddr "$client_mac" ip saddr "$client_ip" ct state { new, established } counter accept
+    test ! -z "$int_if" && nft add rule inet filter output oifname "$int_if" ip protocol "$proto" ip saddr "$int_ip" "$proto" sport { "$ports" } ip daddr "$client_ip" ct state { established } counter accept # jump PASS
+    test ! -z "$int_if" && nft add rule inet filter input iifname "$int_if" ip protocol "$proto" ip daddr "$int_ip" "$proto" sport { "$ports" } ether saddr "$client_mac" ip saddr "$client_ip" ct state { new, established } counter accept
+    test ! -z "$int_if" && nft add rule inet filter output oifname "$int_if" ip protocol "$proto" ip saddr "$int_ip" "$proto" dport { "$ports" } ip daddr "$client_ip" ct state { established } counter accept # jump PASS
 }
 
 ## basic inbound rules
@@ -561,8 +561,8 @@ server_in_wifi() {
     proto=$1
     ports=$2
 
-    nft add rule inet filter input iifname "$int_if" ip protocol "$proto" "$proto" dport { "$ports" } counter log accept
-    nft add rule inet filter output oifname "$int_if" ip protocol "$proto" "$proto" sport { "$ports" } ct state { established, related } counter log accept
+    test ! -z "$int_if" && nft add rule inet filter input iifname "$int_if" ip protocol "$proto" "$proto" dport { "$ports" } counter log accept
+    test ! -z "$int_if" && nft add rule inet filter output oifname "$int_if" ip protocol "$proto" "$proto" sport { "$ports" } ct state { established, related } counter log accept
 
 }
 
@@ -571,8 +571,8 @@ server6_in_wifi() {
     proto=$1
     ports=$2
 
-    nft add rule inet filter input iifname "$int_if" ip6 daddr "$int_ipv6" "$proto" dport { "$ports" } counter log accept
-    nft add rule inet filter output oifname "$int_if" ip6 saddr "$int_ipv6" "$proto" sport { "$ports" } ct state { established, related } counter log accept
+    test ! -z "$int_if" && nft add rule inet filter input iifname "$int_if" ip6 daddr "$int_ipv6" "$proto" dport { "$ports" } counter log accept
+    test ! -z "$int_if" && nft add rule inet filter output oifname "$int_if" ip6 saddr "$int_ipv6" "$proto" sport { "$ports" } ct state { established, related } counter log accept
 
 }
 
@@ -584,10 +584,10 @@ server_internal_2p() {
     client_mac=$5
 
     #   add rule fam  table  chain statement
-    nft add rule inet filter input iifname "$int_if" ip protocol "$proto" ip daddr "$int_ip" "$proto" sport { "$port1" } dport { "$port2" } ether saddr "$client_mac" ip saddr "$client_ip" ct state { new, established } counter accept
-    nft add rule inet filter output oifname "$int_if" ip protocol "$proto" ip saddr "$int_ip" "$proto" dport { "$port1"} sport { "$port2" } ip daddr "$client_ip" ct state { established } counter accept # jump PASS
-    nft add rule inet filter input iifname "$int_if" ip protocol "$proto" ip daddr "$int_ip" "$proto" dport { "$sport1" } sport { "$port2" } ether saddr "$client_mac" ip saddr "$client_ip" ct state { new, established } counter accept
-    nft add rule inet filter output oifname "$int_if" ip protocol "$proto" ip saddr "$int_ip" "$proto" sport{ "$port1" } dport { "$port2" } ip daddr "$client_ip" ct state { established } counter accept # jump PASS
+    test ! -z "$int_if" && nft add rule inet filter input iifname "$int_if" ip protocol "$proto" ip daddr "$int_ip" "$proto" sport { "$port1" } dport { "$port2" } ether saddr "$client_mac" ip saddr "$client_ip" ct state { new, established } counter accept
+    test ! -z "$int_if" && nft add rule inet filter output oifname "$int_if" ip protocol "$proto" ip saddr "$int_ip" "$proto" dport { "$port1"} sport { "$port2" } ip daddr "$client_ip" ct state { established } counter accept # jump PASS
+    test ! -z "$int_if" && nft add rule inet filter input iifname "$int_if" ip protocol "$proto" ip daddr "$int_ip" "$proto" dport { "$sport1" } sport { "$port2" } ether saddr "$client_mac" ip saddr "$client_ip" ct state { new, established } counter accept
+    test ! -z "$int_if" && nft add rule inet filter output oifname "$int_if" ip protocol "$proto" ip saddr "$int_ip" "$proto" sport{ "$port1" } dport { "$port2" } ip daddr "$client_ip" ct state { established } counter accept # jump PASS
 
 }
 
@@ -597,7 +597,7 @@ server_internal_1way() {
     client_ip=$2
     client_mac=$3
 
-    nft add rule inet filter input iifname "$int_if" ip protocol "$proto" ip daddr "$int_ip" "$proto" dport { "$ports" } ether saddr "$client_mac" ip saddr "$client_ip" ct state { new, established } counter accept
+    test ! -z "$int_if" && nft add rule inet filter input iifname "$int_if" ip protocol "$proto" ip daddr "$int_ip" "$proto" dport { "$ports" } ether saddr "$client_mac" ip saddr "$client_ip" ct state { new, established } counter accept
 
 }
 
